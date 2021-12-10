@@ -15,7 +15,7 @@ class ShowDataListViewModel : ViewModel() {
 
     fun getDataList() {
         try {
-            viewModelScope.launch {
+            viewModelScope.launch(Dispatchers.IO) {
                 isSuccessful.postValue(true)
                 val response = Communicator.getRemoteApiServices().getData()
                 if(response.isSuccessful){
