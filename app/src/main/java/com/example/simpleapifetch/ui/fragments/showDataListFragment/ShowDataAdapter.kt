@@ -10,19 +10,29 @@ import com.example.simpleapifetch.databinding.ItemDataLayoutBinding
 import com.example.simpleapifetch.model.SimpleData
 import com.example.simpleapifetch.model.SimpleDataItem
 
-class ShowDataAdapter(private val mContext: Context) :
-    RecyclerView.Adapter<ShowDataAdapter.ShowDataViewHolder>() {
+class ShowDataAdapter(
+    private val mContext: Context,
+    private val onClick: (String, String) -> Unit
+) : RecyclerView.Adapter<ShowDataAdapter.ShowDataViewHolder>() {
 
     private var dataList: MutableList<SimpleDataItem> = mutableListOf()
 
     class ShowDataViewHolder(private val binding: ItemDataLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(simpleDataItem: SimpleDataItem, mContext: Context) {
+        fun bind(
+            simpleDataItem: SimpleDataItem,
+            mContext: Context,
+            onClick: (String, String) -> Unit
+        ) {
             binding.tvTitle.text = simpleDataItem.title
             Glide.with(mContext)
                 .load(simpleDataItem.url)
-                .placeholder( R.drawable.demo)
+                .placeholder(R.drawable.demo)
                 .into(binding.ivDataImage)
+
+            binding.root.setOnClickListener {
+                onClick(simpleDataItem.url, simpleDataItem.title)
+            }
 
         }
 
@@ -41,7 +51,7 @@ class ShowDataAdapter(private val mContext: Context) :
 
     override fun onBindViewHolder(holder: ShowDataViewHolder, position: Int) {
         val currentData = dataList[position]
-        holder.bind(currentData, mContext)
+        holder.bind(currentData, mContext, onClick)
     }
 
     override fun getItemCount(): Int {

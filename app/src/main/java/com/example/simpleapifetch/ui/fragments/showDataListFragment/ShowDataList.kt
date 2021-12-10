@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.simpleapifetch.R
 import com.example.simpleapifetch.databinding.FragmentShowDataListBinding
 
 class ShowDataList : Fragment() {
@@ -28,7 +30,14 @@ class ShowDataList : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mAdapter = ShowDataAdapter(requireContext())
+        val onClick: (String, String) -> Unit = { url: String, title: String ->
+            val bundle = Bundle()
+            bundle.putString("url", url)
+            bundle.putString("title", title)
+            findNavController().navigate(R.id.action_showDataList_to_dataListDetail, bundle)
+        }
+
+        mAdapter = ShowDataAdapter(requireContext(), onClick)
 
         mViewModel.getDataList()
 

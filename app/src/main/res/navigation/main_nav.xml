@@ -9,5 +9,14 @@
         android:id="@+id/showDataList"
         android:name="com.example.simpleapifetch.ui.fragments.showDataListFragment.ShowDataList"
         android:label="fragment_show_data_list"
-        tools:layout="@layout/fragment_show_data_list" />
+        tools:layout="@layout/fragment_show_data_list" >
+        <action
+            android:id="@+id/action_showDataList_to_dataListDetail"
+            app:destination="@id/dataListDetail" />
+    </fragment>
+    <fragment
+        android:id="@+id/dataListDetail"
+        android:name="com.example.simpleapifetch.ui.fragments.dataListDetailsFragment.DataListDetail"
+        android:label="fragment_data_list_detail"
+        tools:layout="@layout/fragment_data_list_detail" />
 </navigation>
